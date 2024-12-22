@@ -5,14 +5,12 @@ pipeline {
     }
     stages {
         stage('Build') {
-            agent {
-                docker {
-                    image 'node:12'
-                    args '-u root'
-                }
-            }
             steps {
-                sh 'npm install'
+                script {
+                    docker.image('node:12').inside('-u root') {
+                        sh 'npm install'
+                    }
+                }
             }
         }
 //         stage('Test') {
